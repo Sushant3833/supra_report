@@ -113,6 +113,7 @@ def get_data(filters):
 			po.name.as_("purchase_order"),
 			po.status,
 			po.supplier,
+			po.supplier_name,
 			po_item.item_code,
 			po_item.qty,
 			po_item.received_qty,
@@ -126,7 +127,8 @@ def get_data(filters):
 			po_item.name,
 			po_item.sales_order.as_("so_no"),  # SO No.
 			po_item.custom_so_item.as_("so_item_code"),  # SO Item Code
-			so.customer.as_("customer_name"),  # Customer Name
+			so.customer.as_("customer"),
+			so.customer_name.as_("customer_name"),  # Customer Name
 			so.delivery_date.as_("so_delivery_date"),  # Sales Order Delivery Date
 		)
 		.where((po_item.parent == po.name) & (po.status.notin(("Stopped", "Closed"))) & (po.docstatus == 1))
@@ -270,6 +272,12 @@ def get_columns(filters):
 			"options": "Supplier",
 			"width": 130,
 		},
+		{
+				"label": _("Supplier Name"),
+				"fieldname": "supplier_name",
+				"fieldtype": "Data",
+				"width": 120,
+			},
 		# {
 		# 	"label": _("Project"),
 		# 	"fieldname": "project",
@@ -381,11 +389,17 @@ def get_columns(filters):
 				"width": 130,
 			},
 			{
-				"label": _("Customer Name"),
-				"fieldname": "customer_name",
+				"label": _("Customer"),
+				"fieldname": "customer",
 				"fieldtype": "Link",
 				"options": "Customer",
 				"width": 150,
+			},
+			{
+				"label": _("Customer Name"),
+				"fieldname": "customer_name",
+				"fieldtype": "Data",
+				"width": 120,
 			},
 			{
 				"label": _("SO Item Code"),
