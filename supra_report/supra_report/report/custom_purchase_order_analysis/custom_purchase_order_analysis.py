@@ -256,7 +256,7 @@ def prepare_chart_data(pending, completed):
 def get_columns(filters):
 	columns = [
 		{"label": _("Date"), "fieldname": "date", "fieldtype": "Date", "width": 90},
-		{"label": _("Required By"), "fieldname": "required_date", "fieldtype": "Date", "width": 90},
+		{"label": _("Expected Date"), "fieldname": "required_date", "fieldtype": "Date", "width": 90},
 		{
 			"label": _("Purchase Order"),
 			"fieldname": "purchase_order",
