@@ -108,13 +108,15 @@ def get_data(filters):
 		.left_join(so).on(so.name == po_item.sales_order)  # Join Sales Order
 		.select(
 			po.transaction_date.as_("date"),
-			po_item.schedule_date.as_("required_date"),
+			po_item.expected_delivery_date.as_("required_date"),
 			po_item.project,
 			po.name.as_("purchase_order"),
 			po.status,
 			po.supplier,
 			po.supplier_name,
 			po_item.item_code,
+			po_item.item_name,
+			po_item.description,
 			po_item.qty,
 			po_item.received_qty,
 			(po_item.qty - po_item.received_qty).as_("pending_qty"),
@@ -300,6 +302,18 @@ def get_columns(filters):
 
 	columns.extend(
 		[
+			{
+				"label": _("Item Name"),
+				"fieldname": "item_name",
+				"fieldtype": "Data",
+				"width": 120,
+			},
+			{
+				"label": _("Item Description"),
+				"fieldname": "description",
+				"fieldtype": "Data",
+				"width": 150,
+			},
 			{
 				"label": _("Qty"),
 				"fieldname": "qty",
